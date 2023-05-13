@@ -1,6 +1,8 @@
 <template>
     <div>
         <h3>Administrator</h3>
+        <p>{{$route.params.message }}</p>
+        <p>{{$route.params.newmessage }}</p>
         <table>
             <thead>
                 <tr>

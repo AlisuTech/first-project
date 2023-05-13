@@ -3,10 +3,11 @@
   <div class="body-style">
     <SideBar></SideBar>
     <div style="flex:1">
-      <Admin v-if="isAdminVisible"></Admin>
-      <Chat v-if="isChatVisible"></Chat>
-      <Projects v-if="isProjectVisible"></Projects>
-      <Files v-if="isFileVisible"></Files>
+      <!-- <div style="background-color: #202730;color: white; border: solid 1px; border-radius: 10px;padding: 10px;align-self: center;" v-if="isLoading">
+        <p>Loading...</p>
+      </div> -->
+      <Loader v-if="isLoading"></Loader>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -15,11 +16,7 @@
 import { mapState } from "vuex";
 import Header from "./components/Header.vue";
 import SideBar from "./components/SideBar.vue";
-import Admin from "./pages/administrator.vue"
-import Chat from "./pages/chat.vue"
-import Files from "./pages/files.vue"
-import Projects from "./pages/projects.vue"
-
+import Loader from "./components/loader.vue"
 export default {
   name: 'App',
   computed:{
@@ -28,19 +25,18 @@ export default {
       isChatVisible:(state)=>state.isChatVisible,
       isProjectVisible:(state)=>state.isProjectVisible,
       isFileVisible:(state)=>state.isFileVisible,
+      isLoading:(state)=>state.isLoading
     })
   },
   data() {
     return {
+      isAdminVisibleFromStorage:false
     }
   },
   components: {
     Header,
     SideBar,
-    Files,
-    Projects,
-    Admin,
-    Chat
+    Loader
   },
   methods: {
     showAlert() {
@@ -53,6 +49,8 @@ export default {
   mounted() {
     // console.log("Page is open")
     // alert("Hello from Joy")
+
+    this.isAdminVisibleFromStorage=localStorage.getItem("isAdminVisible")
   }
 }
 </script>

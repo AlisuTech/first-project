@@ -6,22 +6,42 @@ const store=createStore({
             isAdminVisible: false,
             isChatVisible: false,
             isProjectVisible: false,
-            isFileVisible: false
+            isFileVisible: false,
+            isLoading:false
         }
     },
     mutations:{
+        isLoaderOpen(state, isloading){
+            state.isLoading=isloading
+        },
         showAdmin(state){
-            state.isAdminVisible=!state.isAdminVisible
+            state.isAdminVisible=true
+            state.isChatVisible=false
+            state.isFileVisible=false
+            state.isProjectVisible=false
+            localStorage.setItem("isAdminVisible",true);
         },
         showChat(state){
-            state.isChatVisible=!state.isChatVisible
+            state.isAdminVisible=false
+            state.isChatVisible=true
+            state.isFileVisible=false
+            state.isProjectVisible=false
+            localStorage.setItem("isAdminVisible",false);
             
         },
         showProjects(state){
-            state.isProjectVisible=!state.isProjectVisible
+            state.isAdminVisible=false
+            state.isChatVisible=false
+            state.isFileVisible=false
+            state.isProjectVisible=true
+            localStorage.setItem("isAdminVisible",false);
         },
         showFiles(state){
-            state.isFileVisible=!state.isFileVisible
+            state.isAdminVisible=false
+            state.isChatVisible=false
+            state.isFileVisible=true
+            state.isProjectVisible=false
+            localStorage.setItem("isAdminVisible",false);
         }
     }
 })
