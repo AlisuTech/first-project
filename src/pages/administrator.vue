@@ -6,19 +6,18 @@
         <table>
             <thead>
                 <tr>
-                    <th>#</th>
                     <th>Profile</th>
-                    <th>Status</th>
-                    <th>Roles & Permissions</th>
+                    <th>gender</th>
+                    <th>Email</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="user in users" :key="user">
-                    <td>{{ user.sn }}</td>
-                    <td>{{ user.name }}</td>
+                    <td>{{ user.firstname }} {{ user.lastname }}</td>
+                    <td>{{ user.gender }}</td>
                     <td><div style="background-color: green; color:white">
                         <i class="fa fa-circle"></i>
-                        {{user.status}}
+                        {{user.email}}
                     </div></td>
                     <td>Administrator</td>
                 </tr>
@@ -37,38 +36,25 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     name: "AdminPage",
     data(){
         return {
-            users: [
-                {
-                    sn:1,
-                    name:"Joy Chidinma",
-                    status:"Active"
-                },
-                {
-                    sn:2,
-                    name:"Ifeanyi Nwachukwu",
-                    status:"Active"
-                },
-                {
-                    sn:3,
-                    name:"Oniro Oburoh",
-                    status:"Inactive"
-                },
-                {
-                    sn:4,
-                    name:"Victory Ejere",
-                    status:"Active"
-                },
-                {
-                    sn:5,
-                    name:"Jerry Nkwocha",
-                    status:"Inactive"
-                }
-            ]
+            users: []
         }
+    },
+    methods:{
+        async fetchData(){
+            this.users=[]
+            // const response=await axios.get('http://localhost:5000/getallusers')
+            const response=await axios.get('http://localhost:5000/getuserbygender?gender=female')
+            
+            this.users=response.data
+        }
+    },
+    mounted(){
+        this.fetchData();
     }
 }
 

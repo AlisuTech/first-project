@@ -23,6 +23,54 @@
             <p>{{ loginMessage }}</p>
         </div>
     </dialog>
+    <dialog class="dialog-background animate-dialog" :open="isSignUp">
+        <div>
+            <h3>Sign Up</h3>
+            <button @click="close_dialog_action()">Close Dialog</button>
+            <br>
+            <br>
+            <h4>Email</h4>
+            <br>
+            <input v-model="email"/>
+            <br>
+            <br>
+            <h4>Firstname</h4>
+            <br>
+            <input v-model="firstname"/>
+            <br>
+            <br>
+            <h4>Lastname</h4>
+            <br>
+            <br>
+            <input v-model="lastname"/>
+            <br>
+            <br>
+            <h4>Gender</h4>
+            <br>
+            <br>
+            <input v-model="gender"/>
+            <br>
+            <br>
+            <h4>Phone Number</h4>
+            <br>
+            <br>
+            <input v-model="phonenumber"/>
+            <br>
+            <br>
+            <h4>Location</h4>
+            <input v-model="location"/>
+            <br>
+            <br>
+            <h4>Password</h4>
+            <br>
+            <input v-model="password"/>
+            <br>
+            <br>
+            <button @click="signup_action()">Login</button>
+            <br>
+            <br>>
+        </div>
+    </dialog>
     <div class="header-grid header-background-palette">
         <div class="header-flex header-text-space">
             <img class="header-text-space" src="../assets/logo.png" style="width:40px"/>
@@ -33,6 +81,10 @@
                 <h3 style="color:orange" >{{headerName}}</h3>
                 <p>(PROJECTS)</p>
             </div>
+            <button class="header-button-design" @click="signup_action_callback()">
+                <p id="logbtn" class="header-login-style header-text-space">Sign Up</p>
+            </button>
+            
             <button class="header-button-design" @click="log_in_out_action()">
                 <p id="logbtn" class="header-login-style header-text-space">{{ loginTitle }}</p>
             </button>
@@ -42,6 +94,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 
 export default {
     name:"HeaderPage",
@@ -50,7 +104,13 @@ export default {
             loginTitle:"Login",
             headerName:"Joy Chidinma",
             showHeaderName:false,
-            email:"oniro@gmail.com",
+            email:"",
+            firstname:"",
+            lastname:"",
+            gender:"",
+            location:"",
+            phonenumber:"",
+            isSignUp:false,
             password:"nehfbfbb",
             rememberme:false,
             loginMessage:"",
@@ -58,6 +118,21 @@ export default {
         }
     },
     methods:{
+        async signup_action (){
+            // let userData={
+            //     firstname:this.firstname,
+            //     lastname:this.lastname,
+            //     email:this.email,
+            //     gender:this.gender,
+            //     location:this.location,
+            //     phonenumber:this.phonenumber
+            // }
+            await axios.post(`http://localhost:5000/createuserbyquery?firstname=${this.firstname}&lastname=${this.lastname}&gender=${this.gender}`)
+            // await axios.post('http://localhost:5000/createuser',userData)
+        },
+        signup_action_callback(){
+            this.isSignUp=!this.isSignUp
+        },
         log_in_out_action(){
             this.isDialogOpen=true
 
