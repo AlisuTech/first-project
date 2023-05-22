@@ -140,22 +140,26 @@ export default {
         close_dialog_action(){
             this.isDialogOpen=false
         },
-        login_action(){
+        async login_action(){
             if(this.loginTitle=="Logout"){
                 this.loginTitle="Login"
                 this.showHeaderName=false
             }
             else{
-                this.loginTitle="Logout"
-                if(this.email=="joy@gmail.com"){
-                    this.showHeaderName=true
-                    this.headerName=this.email
-                    this.loginMessage=""
-                    this.isDialogOpen=false
-                }
-                else{
-                    this.loginMessage="Invalid login details"
-                }
+                var response=await axios.get(`http://localhost:5000/loginbyauth?email=${this.email}&password=${this.password}`)
+                localStorage.accessToken=response.data.accessToken;
+                alert(response.data.message)
+                return;
+                // if(this.email=="joy@gmail.com"){
+                //     this.showHeaderName=true
+                //     this.headerName=this.email
+                //     this.loginMessage=""
+                //     this.isDialogOpen=false
+                // }
+                // else{
+                //     this.loginMessage="Invalid login details"
+                // }
+                // this.loginTitle="Logout"
             }
             
 

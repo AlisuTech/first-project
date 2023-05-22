@@ -47,10 +47,20 @@ export default {
     methods:{
         async fetchData(){
             this.users=[]
-            // const response=await axios.get('http://localhost:5000/getallusers')
-            const response=await axios.get('http://localhost:5000/getuserbygender?gender=female')
-            
-            this.users=response.data
+            const response=await axios.get('http://localhost:5000/getallusers',
+           { 
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization':localStorage.accessToken
+            }
+        }
+            )
+            // const response=await axios.get('http://localhost:5000/getuserbygender?gender=female')
+            if(response.status==200){
+                this.users=response.data
+            }else{
+                alert(response.data)
+            }
         }
     },
     mounted(){
